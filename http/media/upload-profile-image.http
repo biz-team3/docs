@@ -1,0 +1,65 @@
+# ============================================================
+# API: 프로필 이미지 업로드
+# Method: POST
+# Endpoint: /api/media/profile-images
+# Auth: 필요
+# Content-Type: multipart/form-data
+# Description:
+# - 프로필 편집에서 새 프로필 이미지를 먼저 업로드한다.
+# - 응답의 imageUrl을 PATCH /api/profiles/users/{userId}의 profileImageUrls에 반영한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# Multipart Form Data
+# - file: File, required, 프로필 이미지 파일
+#
+# 제한 조건
+# - 허용 타입: image/jpeg, image/png, image/webp, image/gif
+# - 파일당 최대 5MB
+# - 업로드만으로 프로필이 바뀌지 않고, updateProfile 호출 시 실제 선택값이 저장된다.
+#
+# 테스트 필요 조건
+# - 프로필 이미지 업로드 200
+# - 업로드 후 updateProfile으로 반영
+# - 5MB 초과 400
+# - 지원하지 않는 파일 타입 400
+
+### 프로필 이미지 업로드
+POST {{baseUrl}}/api/media/profile-images
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
+
+------WebKitFormBoundaryTest
+Content-Disposition: form-data; name="file"; filename="profile.jpg"
+Content-Type: image/jpeg
+
+< ./fixtures/profile.jpg
+------WebKitFormBoundaryTest--
+
+# Success Response: 200 OK
+# {
+#   "imageUrl": "/uploads/profiles/profile.jpg",
+#   "originalFileName": "profile.jpg",
+#   "contentType": "image/jpeg",
+#   "fileSize": 80000
+# }
+
+### 프로필 이미지 업로드 실패 - 파일 크기 초과
+POST {{baseUrl}}/api/media/profile-images
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
+
+------WebKitFormBoundaryTest
+Content-Disposition: form-data; name="file"; filename="profile-large.jpg"
+Content-Type: image/jpeg
+
+< ./fixtures/profile-large.jpg
+------WebKitFormBoundaryTest--
+
+# Error Response: 400 Bad Request
+# {
+#   "code": "MEDIA_FILE_TOO_LARGE",
+#   "message": "이미지 크기는 5MB 이하만 업로드할 수 있습니다."
+# }

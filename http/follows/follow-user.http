@@ -1,0 +1,57 @@
+# ============================================================
+# API: 사용자 팔로우 또는 팔로우 요청
+# Method: POST
+# Endpoint: /api/follows/{targetUserId}
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 공개 계정은 즉시 FOLLOWING 상태가 된다.
+# - 비공개 계정은 PENDING 팔로우 요청 상태가 된다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+@targetUserId = 2
+
+# Path Parameters
+# - targetUserId: number, required, 팔로우 대상 사용자 ID
+#
+# 제한 조건
+# - 자기 자신은 팔로우할 수 없다.
+# - 공개 계정: follower/following 카운트를 즉시 반영한다.
+# - 비공개 계정: followRequests에 PENDING 요청만 생성하고 카운트는 증가시키지 않는다.
+# - 중복 요청/중복 팔로우는 멱등 처리한다.
+#
+# 테스트 필요 조건
+# - 공개 계정 팔로우 -> viewerRelation FOLLOWING
+# - 비공개 계정 팔로우 -> viewerRelation PENDING
+# - 자기 자신 팔로우 400
+# - 중복 팔로우 count 중복 증가 없음
+
+### 사용자 팔로우 또는 팔로우 요청
+POST {{baseUrl}}/api/follows/{{targetUserId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+# Success Response: 200 OK
+# {
+#   "targetUserId": 2,
+#   "viewerRelation": "FOLLOWING",
+#   "canViewContent": true,
+#   "followerCount": 1201
+# }
+
+### 사용자 팔로우 실패 - 자기 자신
+POST {{baseUrl}}/api/follows/1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+# Error Response: 400 Bad Request
+# {
+#   "code": "FOLLOW_SELF_NOT_ALLOWED",
+#   "message": "자기 자신은 팔로우할 수 없습니다."
+# }

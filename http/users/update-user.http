@@ -1,0 +1,72 @@
+# ============================================================
+# API: 사용자 기본 정보 수정
+# Method: PATCH
+# Endpoint: /api/users/{userId}
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 사용자 계정 기본 필드를 수정한다.
+# - 현재 로그인 사용자 본인만 수정할 수 있다.
+# - 프로필 편집 화면과 겹치는 필드는 백엔드 DTO 정책을 맞춰야 한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+@userId = 1
+
+# Path Parameters
+# - userId: number, required
+#
+# Request Body
+# - username: string, optional
+# - name: string, optional
+# - bio: string, optional
+# - website: string, optional
+# - accountVisibility: "PUBLIC" | "PRIVATE", optional
+#
+# 제한 조건
+# - 본인 userId만 수정 가능하다.
+# - username 변경 시 중복 검사를 수행한다.
+# - 허용되지 않은 필드는 무시하거나 400으로 거절한다.
+#
+# 테스트 필요 조건
+# - 본인 수정 200
+# - 타 사용자 수정 403
+# - 중복 username 409
+# - 수정 후 GET /api/auth/me 최신값 동기화
+
+### 사용자 기본 정보 수정
+PATCH {{baseUrl}}/api/users/{{userId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "oosu.hada",
+  "name": "oosu",
+  "bio": "리액트 개발자",
+  "website": "",
+  "accountVisibility": "PRIVATE"
+}
+
+# Success Response: 200 OK
+# {
+#   "userId": 1,
+#   "username": "oosu.hada",
+#   "name": "oosu",
+#   "profileImageUrl": "/oosu.hada.jpg"
+# }
+
+### 사용자 기본 정보 수정 실패 - 권한 없음
+PATCH {{baseUrl}}/api/users/2
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "not allowed"
+}
+
+# Error Response: 403 Forbidden
+# {
+#   "code": "USER_FORBIDDEN",
+#   "message": "본인 계정만 수정할 수 있습니다."
+# }

@@ -1,0 +1,47 @@
+# ============================================================
+# API: 로그아웃
+# Method: POST
+# Endpoint: /api/auth/logout
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 현재 로그인 사용자를 로그아웃 처리한다.
+# - JWT 기반 구조이므로 프론트는 성공 후 localStorage의 accessToken을 제거한다.
+# - 서버가 refresh token/blacklist를 사용한다면 이 API에서 토큰 무효화를 처리한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# 제한 조건
+# - Authorization 헤더가 없거나 잘못된 토큰이면 401을 반환한다.
+# - accessToken만 쓰는 단순 구조라면 서버 응답은 성공 여부만 반환해도 된다.
+#
+# 테스트 필요 조건
+# - 로그인 후 로그아웃 200
+# - 로그아웃 후 GET /api/auth/me 401
+# - 토큰 없이 호출 시 401
+
+### 로그아웃
+POST {{baseUrl}}/api/auth/logout
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+# Success Response: 200 OK
+# {
+#   "ok": true
+# }
+
+### 로그아웃 실패 - 인증 없음
+POST {{baseUrl}}/api/auth/logout
+Content-Type: application/json
+
+{}
+
+# Error Response: 401 Unauthorized
+# {
+#   "code": "AUTH_REQUIRED",
+#   "message": "로그인이 필요합니다."
+# }

@@ -1,0 +1,55 @@
+# ============================================================
+# API: 내 프로필 조회
+# Method: GET
+# Endpoint: /api/profiles/me
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 현재 로그인 사용자의 프로필 정보를 조회한다.
+# - 프로필 화면, 설정 팝업, 전역 사용자 컨텍스트에서 사용한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# 제한 조건
+# - Authorization 토큰 기준의 사용자만 조회한다.
+# - isOwner는 항상 true여야 한다.
+# - 프로필 이미지 배열과 현재 선택 인덱스를 함께 내려준다.
+#
+# 테스트 필요 조건
+# - 로그인 후 내 프로필 조회 200
+# - 토큰 없음 401
+# - 프로필 수정 후 최신 값 반환
+
+### 내 프로필 조회
+GET {{baseUrl}}/api/profiles/me
+Authorization: Bearer {{accessToken}}
+
+# Success Response: 200 OK
+# {
+#   "userId": 1,
+#   "username": "oosu.hada",
+#   "name": "oosu",
+#   "bio": "리액트 개발자",
+#   "website": "",
+#   "profileImageUrls": ["/oosu.hada.jpg"],
+#   "currentProfileImageIndex": 0,
+#   "profileImageUrl": "/oosu.hada.jpg",
+#   "followerCount": 2400,
+#   "followingCount": 321,
+#   "postCount": 10,
+#   "accountVisibility": "PRIVATE",
+#   "viewerRelation": "OWNER",
+#   "canViewContent": true,
+#   "isOwner": true
+# }
+
+### 내 프로필 조회 실패 - 인증 없음
+GET {{baseUrl}}/api/profiles/me
+
+# Error Response: 401 Unauthorized
+# {
+#   "code": "AUTH_REQUIRED",
+#   "message": "로그인이 필요합니다."
+# }

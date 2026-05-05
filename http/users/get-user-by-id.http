@@ -1,0 +1,47 @@
+# ============================================================
+# API: 사용자 요약 조회
+# Method: GET
+# Endpoint: /api/users/{userId}
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - userId 기준으로 사용자 요약 정보를 조회한다.
+# - 수정/삭제/관계 처리는 username이 아니라 userId 기준으로 진행한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+@userId = 1
+
+# Path Parameters
+# - userId: number, required, 조회할 사용자 ID
+#
+# 제한 조건
+# - 존재하지 않는 userId는 404를 반환한다.
+# - 비공개 여부와 무관하게 요약 정보만 반환한다.
+#
+# 테스트 필요 조건
+# - 존재하는 userId 조회 200
+# - 존재하지 않는 userId 조회 404
+
+### 사용자 요약 조회
+GET {{baseUrl}}/api/users/{{userId}}
+Authorization: Bearer {{accessToken}}
+
+# Success Response: 200 OK
+# {
+#   "userId": 1,
+#   "username": "oosu.hada",
+#   "name": "oosu",
+#   "profileImageUrl": "/oosu.hada.jpg"
+# }
+
+### 사용자 요약 조회 실패 - 없음
+GET {{baseUrl}}/api/users/999999
+Authorization: Bearer {{accessToken}}
+
+# Error Response: 404 Not Found
+# {
+#   "code": "USER_NOT_FOUND",
+#   "message": "사용자를 찾을 수 없습니다."
+# }

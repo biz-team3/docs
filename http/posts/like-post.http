@@ -1,0 +1,53 @@
+# ============================================================
+# API: 게시물 좋아요
+# Method: POST
+# Endpoint: /api/posts/{postId}/like
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 현재 사용자가 게시물에 좋아요를 누른다.
+# - 이미 좋아요한 게시물이라면 멱등하게 likedByMe true를 반환한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+@postId = 10
+
+# Path Parameters
+# - postId: number, required
+#
+# 제한 조건
+# - 볼 수 없는 게시물은 403을 반환한다.
+# - 중복 좋아요는 likeCount를 중복 증가시키지 않는다.
+#
+# 테스트 필요 조건
+# - 좋아요 200
+# - 같은 게시물 연속 좋아요 count 유지
+# - 비공개/미팔로우 게시물 403
+
+### 게시물 좋아요
+POST {{baseUrl}}/api/posts/{{postId}}/like
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+# Success Response: 200 OK
+# {
+#   "postId": 10,
+#   "likedByMe": true,
+#   "likeCount": 25
+# }
+
+### 게시물 좋아요 실패 - 게시물 없음
+POST {{baseUrl}}/api/posts/999999/like
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+# Error Response: 404 Not Found
+# {
+#   "code": "POST_NOT_FOUND",
+#   "message": "게시물을 찾을 수 없습니다."
+# }

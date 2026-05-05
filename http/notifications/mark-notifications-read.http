@@ -1,0 +1,55 @@
+# ============================================================
+# API: 알림 읽음 처리
+# Method: PATCH
+# Endpoint: /api/notifications/read
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 알림 패널 오픈 또는 선택 알림 확인 시 읽음 처리한다.
+# - notificationIds가 없으면 현재 사용자의 모든 알림을 읽음 처리한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# Request Body
+# - notificationIds: number[], optional, 읽음 처리할 알림 ID 목록
+#
+# 제한 조건
+# - 다른 사용자의 알림 ID는 처리하지 않는다.
+# - notificationIds가 비어 있거나 없으면 전체 읽음 처리 정책을 사용한다.
+# - 읽음 처리 후 summary의 unreadNotificationCount가 감소해야 한다.
+#
+# 테스트 필요 조건
+# - 특정 알림 읽음 처리
+# - 전체 알림 읽음 처리
+# - 다른 사용자 알림 ID 포함 시 무시 또는 403 정책 확인
+# - 읽음 처리 후 badge 0 반영
+
+### 선택 알림 읽음 처리
+PATCH {{baseUrl}}/api/notifications/read
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "notificationIds": [1, 2]
+}
+
+# Success Response: 200 OK
+# {
+#   "notificationIds": [1, 2],
+#   "read": true
+# }
+
+### 전체 알림 읽음 처리
+PATCH {{baseUrl}}/api/notifications/read
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+# Success Response: 200 OK
+# {
+#   "notificationIds": [1, 2, 3],
+#   "read": true
+# }

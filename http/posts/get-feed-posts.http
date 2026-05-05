@@ -1,0 +1,87 @@
+# ============================================================
+# API: 홈 피드 게시물 조회
+# Method: GET
+# Endpoint: /api/posts/feed
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 홈 피드에 표시할 게시물 목록을 무한 스크롤 기준으로 조회한다.
+# - 1차 MVP 기준 size 기본값은 10이다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+@page = 0
+@size = 10
+
+# Query Parameters
+# - page: number, optional, 기본 0
+# - size: number, optional, 기본 10
+#
+# 제한 조건
+# - 비공개 계정 게시물은 OWNER/FOLLOWING 관계일 때만 포함한다.
+# - author.userId와 viewerPermissions를 포함해 내 게시물의 수정/삭제 UI를 판단한다.
+# - previewComments는 최대 0~2개만 내려준다.
+#
+# 테스트 필요 조건
+# - 첫 페이지 10개 조회
+# - hasNext true일 때 다음 페이지 조회
+# - 비공개/미팔로우 게시물 제외
+# - 내 게시물 viewerPermissions.canEdit/canDelete true
+
+### 홈 피드 게시물 조회
+GET {{baseUrl}}/api/posts/feed?page={{page}}&size={{size}}
+Authorization: Bearer {{accessToken}}
+
+# Success Response: 200 OK
+# {
+#   "posts": [
+#     {
+#       "postId": 10,
+#       "author": {
+#         "userId": 1,
+#         "username": "oosu.hada",
+#         "displayName": "oosu",
+#         "profileImageUrl": "/oosu.hada.jpg",
+#         "hasActiveStory": true,
+#         "isViewer": true
+#       },
+#       "media": [
+#         { "mediaId": 1001, "type": "IMAGE", "url": "/oosu.hada.jpg", "sortOrder": 0 }
+#       ],
+#       "caption": "오늘은 홈 피드 테스트",
+#       "translatedCaption": "오늘은 홈 피드 테스트",
+#       "hashtags": ["#개발"],
+#       "createdAtText": "now",
+#       "likeCount": 24,
+#       "commentCount": 8,
+#       "shareCount": 0,
+#       "likedByMe": false,
+#       "savedByMe": true,
+#       "suggested": false,
+#       "viewerFollowingAuthor": false,
+#       "viewerPermissions": { "canEdit": true, "canDelete": true },
+#       "previewComments": [
+#         {
+#           "commentId": 1,
+#           "author": { "userId": 2, "username": "mijinseooo" },
+#           "text": "좋아요."
+#         }
+#       ]
+#     }
+#   ],
+#   "page": 0,
+#   "size": 10,
+#   "totalElements": 30,
+#   "totalPages": 3,
+#   "hasNext": true
+# }
+
+### 홈 피드 게시물 조회 실패 - 인증 없음
+GET {{baseUrl}}/api/posts/feed?page=0&size=10
+
+# Error Response: 401 Unauthorized
+# {
+#   "code": "AUTH_REQUIRED",
+#   "message": "로그인이 필요합니다."
+# }

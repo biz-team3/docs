@@ -1,0 +1,73 @@
+# ============================================================
+# API: 게시물 이미지 업로드
+# Method: POST
+# Endpoint: /api/media/posts
+# Auth: 필요
+# Content-Type: multipart/form-data
+# Description:
+# - 게시물 생성/수정 전에 이미지 파일을 업로드한다.
+# - 응답의 media 배열을 POST /api/posts 또는 PUT /api/posts/{postId}/media에 사용한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# Multipart Form Data
+# - files: File[], required, 이미지 파일 목록
+#
+# 제한 조건
+# - 최대 10장까지 허용한다.
+# - 허용 타입: image/jpeg, image/png, image/webp, image/gif
+# - 파일당 최대 5MB
+# - 1차 MVP는 IMAGE 타입만 허용한다.
+#
+# 테스트 필요 조건
+# - 이미지 1장 업로드
+# - 이미지 여러 장 업로드
+# - 10장 초과 400
+# - 5MB 초과 400
+# - 지원하지 않는 파일 타입 400
+
+### 게시물 이미지 업로드
+POST {{baseUrl}}/api/media/posts
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
+
+------WebKitFormBoundaryTest
+Content-Disposition: form-data; name="files"; filename="post-1.jpg"
+Content-Type: image/jpeg
+
+< ./fixtures/post-1.jpg
+------WebKitFormBoundaryTest--
+
+# Success Response: 200 OK
+# {
+#   "media": [
+#     {
+#       "type": "IMAGE",
+#       "url": "/uploads/posts/post-1.jpg",
+#       "sortOrder": 0,
+#       "originalFileName": "post-1.jpg",
+#       "contentType": "image/jpeg",
+#       "fileSize": 120000
+#     }
+#   ]
+# }
+
+### 게시물 이미지 업로드 실패 - 파일 타입 오류
+POST {{baseUrl}}/api/media/posts
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
+
+------WebKitFormBoundaryTest
+Content-Disposition: form-data; name="files"; filename="post.txt"
+Content-Type: text/plain
+
+< ./fixtures/post.txt
+------WebKitFormBoundaryTest--
+
+# Error Response: 400 Bad Request
+# {
+#   "code": "MEDIA_UNSUPPORTED_TYPE",
+#   "message": "JPG, PNG, WEBP, GIF 이미지만 업로드할 수 있습니다."
+# }

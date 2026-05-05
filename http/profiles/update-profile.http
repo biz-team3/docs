@@ -1,0 +1,87 @@
+# ============================================================
+# API: 프로필 수정
+# Method: PATCH
+# Endpoint: /api/profiles/users/{userId}
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 프로필 편집 팝업에서 사용자 이름, 이름, 웹사이트, 소개, 공개 범위, 프로필 이미지를 수정한다.
+# - 저장 후 최신 프로필 DTO를 반환해 프론트 상태와 AuthContext를 동기화한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+@userId = 1
+
+# Path Parameters
+# - userId: number, required
+#
+# Request Body
+# - username: string, optional
+# - name: string, optional
+# - bio: string, optional
+# - website: string, optional
+# - accountVisibility: "PUBLIC" | "PRIVATE", optional
+# - profileImageUrls: string[], optional, 업로드 API 응답 imageUrl 배열
+# - currentProfileImageIndex: number, optional
+#
+# 제한 조건
+# - 본인 프로필만 수정 가능하다.
+# - username 중복은 허용하지 않는다.
+# - accountVisibility 변경 시 팔로우 요청/콘텐츠 노출 정책을 함께 확인한다.
+# - 프로필 이미지 파일 자체는 POST /api/media/profile-images에서 먼저 업로드한다.
+#
+# 테스트 필요 조건
+# - 프로필 텍스트 수정
+# - 공개/비공개 전환
+# - 프로필 이미지 변경 후 최신 profileImageUrl 반환
+# - 타 사용자 수정 403
+
+### 프로필 수정
+PATCH {{baseUrl}}/api/profiles/users/{{userId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "oosu.hada",
+  "name": "oosu",
+  "bio": "리액트 개발자 💻 | 맛집 탐방 좋아함 🍕 | 일상 공유 ☕",
+  "website": "",
+  "accountVisibility": "PRIVATE",
+  "profileImageUrls": ["/oosu.hada.jpg"],
+  "currentProfileImageIndex": 0
+}
+
+# Success Response: 200 OK
+# {
+#   "userId": 1,
+#   "username": "oosu.hada",
+#   "name": "oosu",
+#   "bio": "리액트 개발자 💻 | 맛집 탐방 좋아함 🍕 | 일상 공유 ☕",
+#   "website": "",
+#   "profileImageUrls": ["/oosu.hada.jpg"],
+#   "currentProfileImageIndex": 0,
+#   "profileImageUrl": "/oosu.hada.jpg",
+#   "followerCount": 2400,
+#   "followingCount": 321,
+#   "postCount": 10,
+#   "accountVisibility": "PRIVATE",
+#   "viewerRelation": "OWNER",
+#   "canViewContent": true,
+#   "isOwner": true
+# }
+
+### 프로필 수정 실패 - 권한 없음
+PATCH {{baseUrl}}/api/profiles/users/2
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "bio": "not allowed"
+}
+
+# Error Response: 403 Forbidden
+# {
+#   "code": "PROFILE_FORBIDDEN",
+#   "message": "본인 프로필만 수정할 수 있습니다."
+# }

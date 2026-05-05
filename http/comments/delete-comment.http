@@ -1,0 +1,48 @@
+# ============================================================
+# API: 댓글 삭제
+# Method: DELETE
+# Endpoint: /api/comments/{commentId}
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 댓글 작성자가 본인 댓글을 삭제한다.
+# - 삭제 전 내부 ConfirmDialog로 재확인한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+@commentId = 100
+
+# Path Parameters
+# - commentId: number, required
+#
+# 제한 조건
+# - 댓글 작성자만 삭제 가능하다.
+# - 삭제 시 게시물 commentCount가 감소해야 한다.
+# - commentCount는 0 미만이 되면 안 된다.
+#
+# 테스트 필요 조건
+# - 내 댓글 삭제 200 또는 204
+# - 타 사용자 댓글 삭제 403
+# - 삭제 후 목록에서 제거
+# - 삭제 후 게시물 commentCount 반영
+
+### 댓글 삭제
+DELETE {{baseUrl}}/api/comments/{{commentId}}
+Authorization: Bearer {{accessToken}}
+
+# Success Response: 200 OK
+# {
+#   "commentId": 100,
+#   "deleted": true
+# }
+
+### 댓글 삭제 실패 - 댓글 없음
+DELETE {{baseUrl}}/api/comments/999999
+Authorization: Bearer {{accessToken}}
+
+# Error Response: 404 Not Found
+# {
+#   "code": "COMMENT_NOT_FOUND",
+#   "message": "댓글을 찾을 수 없습니다."
+# }

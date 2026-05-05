@@ -1,0 +1,97 @@
+# ============================================================
+# API: 게시물 생성
+# Method: POST
+# Endpoint: /api/posts
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 업로드된 media DTO와 caption으로 새 게시물을 생성한다.
+# - 실제 파일 업로드는 POST /api/media/posts에서 먼저 처리한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# Request Body
+# - media: array, required, 최소 1개, 최대 10개
+# - media[].url: string, required, 업로드 API가 반환한 URL
+# - media[].type: "IMAGE", required
+# - media[].sortOrder: number, required
+# - caption: string, required
+# - translatedCaption: string, optional
+# - hashtags: string[], optional, 서버에서 caption 기반 추출 가능
+#
+# 제한 조건
+# - media는 최소 1장 이상 필요하다.
+# - 1차 MVP는 이미지 타입만 허용한다.
+# - 해시태그는 "#여행 #제주도" 같은 caption 내부 텍스트에서 인식 가능해야 한다.
+#
+# 테스트 필요 조건
+# - 이미지 1장 게시물 생성
+# - 이미지 여러 장 게시물 생성
+# - caption 해시태그 추출
+# - media 누락 400
+
+### 게시물 생성
+POST {{baseUrl}}/api/posts
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "media": [
+    {
+      "type": "IMAGE",
+      "url": "/uploads/posts/post-1.jpg",
+      "sortOrder": 0,
+      "originalFileName": "post-1.jpg"
+    }
+  ],
+  "caption": "제주도 바다 #여행 #제주도 #바다",
+  "translatedCaption": "제주도 바다 #여행 #제주도 #바다",
+  "hashtags": ["#여행", "#제주도", "#바다"]
+}
+
+# Success Response: 201 Created
+# {
+#   "postId": 31,
+#   "author": {
+#     "userId": 1,
+#     "username": "oosu.hada",
+#     "displayName": "oosu",
+#     "profileImageUrl": "/oosu.hada.jpg",
+#     "hasActiveStory": true,
+#     "isViewer": true
+#   },
+#   "media": [
+#     { "mediaId": 3101, "type": "IMAGE", "url": "/uploads/posts/post-1.jpg", "sortOrder": 0 }
+#   ],
+#   "caption": "제주도 바다 #여행 #제주도 #바다",
+#   "translatedCaption": "제주도 바다 #여행 #제주도 #바다",
+#   "hashtags": ["#여행", "#제주도", "#바다"],
+#   "createdAtText": "now",
+#   "likeCount": 0,
+#   "commentCount": 0,
+#   "shareCount": 0,
+#   "likedByMe": false,
+#   "savedByMe": false,
+#   "suggested": false,
+#   "viewerFollowingAuthor": false,
+#   "viewerPermissions": { "canEdit": true, "canDelete": true },
+#   "previewComments": []
+# }
+
+### 게시물 생성 실패 - 이미지 없음
+POST {{baseUrl}}/api/posts
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "media": [],
+  "caption": "이미지 없음"
+}
+
+# Error Response: 400 Bad Request
+# {
+#   "code": "POST_MEDIA_REQUIRED",
+#   "message": "게시물 이미지는 최소 1장 이상 필요합니다."
+# }

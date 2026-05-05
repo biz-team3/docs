@@ -1,0 +1,69 @@
+# ============================================================
+# API: 사용자 생성
+# Method: POST
+# Endpoint: /api/users
+# Auth: 정책 확정 필요
+# Content-Type: application/json
+# Description:
+# - 사용자 레코드를 생성한다.
+# - 1차 MVP 화면에는 회원가입이 없으므로 일반 사용자 공개 API로 노출하지 않는 것을 권장한다.
+# - 백엔드 테스트, 관리자, seed 용도라면 권한 정책을 별도로 확정한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# Request Body
+# - username: string, required, 고유 사용자 이름
+# - name: string, optional, 표시 이름
+# - bio: string, optional
+# - website: string, optional
+# - profileImageUrls: string[], optional
+# - accountVisibility: "PUBLIC" | "PRIVATE", optional, 기본 PUBLIC
+#
+# 제한 조건
+# - username은 중복될 수 없다.
+# - accountVisibility는 PUBLIC 또는 PRIVATE만 허용한다.
+# - 1차 UI에는 연결하지 않는다.
+#
+# 테스트 필요 조건
+# - 신규 username 생성 200 또는 201
+# - 중복 username 409
+# - 잘못된 accountVisibility 400
+
+### 사용자 생성
+POST {{baseUrl}}/api/users
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "new.user",
+  "name": "new user",
+  "bio": "",
+  "website": "",
+  "profileImageUrls": [],
+  "accountVisibility": "PUBLIC"
+}
+
+# Success Response: 201 Created
+# {
+#   "userId": 20,
+#   "username": "new.user",
+#   "name": "new user",
+#   "profileImageUrl": ""
+# }
+
+### 사용자 생성 실패 - username 중복
+POST {{baseUrl}}/api/users
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "oosu.hada"
+}
+
+# Error Response: 409 Conflict
+# {
+#   "code": "USER_USERNAME_DUPLICATED",
+#   "message": "이미 사용 중인 사용자 이름입니다."
+# }

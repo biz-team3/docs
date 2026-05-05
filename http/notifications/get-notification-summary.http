@@ -1,0 +1,44 @@
+# ============================================================
+# API: 알림 배지 요약 조회
+# Method: GET
+# Endpoint: /api/notifications/summary
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 사이드바/모바일 헤더의 알림 badge 수를 조회한다.
+# - unread 알림 수와 pending 팔로우 요청 수를 분리해서 반환한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# 제한 조건
+# - unreadNotificationCount는 read=false 알림 수다.
+# - pendingFollowRequestCount는 현재 사용자가 받은 PENDING 요청 수다.
+# - totalBadgeCount는 두 값을 합산한다.
+#
+# 테스트 필요 조건
+# - 알림 unread 수 반영
+# - 팔로우 요청 pending 수 반영
+# - 알림 읽음 처리 후 summary 감소
+# - 팔로우 요청 수락/거절 후 pending 감소
+
+### 알림 배지 요약 조회
+GET {{baseUrl}}/api/notifications/summary
+Authorization: Bearer {{accessToken}}
+
+# Success Response: 200 OK
+# {
+#   "unreadNotificationCount": 3,
+#   "pendingFollowRequestCount": 2,
+#   "totalBadgeCount": 5
+# }
+
+### 알림 배지 요약 조회 실패 - 인증 없음
+GET {{baseUrl}}/api/notifications/summary
+
+# Error Response: 401 Unauthorized
+# {
+#   "code": "AUTH_REQUIRED",
+#   "message": "로그인이 필요합니다."
+# }

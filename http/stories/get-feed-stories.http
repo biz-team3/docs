@@ -1,0 +1,52 @@
+# ============================================================
+# API: 홈 스토리 피드 조회
+# Method: GET
+# Endpoint: /api/stories/feed
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 홈 상단 스토리 바에 표시할 사용자별 스토리 묶음을 조회한다.
+# - 현재 사용자와 팔로잉 사용자의 스토리를 포함한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# 제한 조건
+# - 비공개 계정의 스토리는 OWNER/FOLLOWING 관계에서만 반환한다.
+# - 스토리가 없는 사용자는 storyGroups에서 제외한다.
+# - 각 그룹은 다중 스토리 페이징을 위해 stories 배열을 포함한다.
+#
+# 테스트 필요 조건
+# - 내 스토리 포함
+# - 팔로잉 사용자 스토리 포함
+# - 비공개/미팔로우 사용자 스토리 제외
+# - 스토리 10개 mock 기준 좌우 이동 확인
+
+### 홈 스토리 피드 조회
+GET {{baseUrl}}/api/stories/feed
+Authorization: Bearer {{accessToken}}
+
+# Success Response: 200 OK
+# {
+#   "storyGroups": [
+#     {
+#       "userId": 1,
+#       "username": "oosu.hada",
+#       "profileImageUrl": "/oosu.hada.jpg",
+#       "isMe": true,
+#       "stories": [
+#         { "storyId": 101, "userId": 1, "imageUrl": "/oosu.hada.jpg", "createdAtText": "now" }
+#       ]
+#     }
+#   ]
+# }
+
+### 홈 스토리 피드 조회 실패 - 인증 없음
+GET {{baseUrl}}/api/stories/feed
+
+# Error Response: 401 Unauthorized
+# {
+#   "code": "AUTH_REQUIRED",
+#   "message": "로그인이 필요합니다."
+# }

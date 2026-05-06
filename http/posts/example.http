@@ -1,0 +1,47 @@
+# ============================================================
+# Example: 현재 server 코드 기준 게시물 생성
+# Method: POST
+# Endpoint: /api/posts
+# Auth: 현재 코드에서는 미적용
+# Content-Type: application/json
+# Description:
+# - PostController는 authorId를 1로 고정한다.
+# - PostService는 PostDao.insert(post) 후 AuthorDao.findById(1)을 조회한다.
+# - 응답은 CreatePostResponse.toDto(post, author) 기준의 간단 게시물 생성 결과다.
+# - 실행 전에 server/src/main/resources/db/schema/post-create-schema.sql을 Oracle에 적용해야 한다.
+# Expected Response: 200 OK
+# {
+#   "postId": 1,
+#   "author": {
+#     "authorId": 1,
+#     "username": "oosu.hada",
+#     "displayName": "oosu",
+#     "profileImageUrl": "/oosu.hada.jpg",
+#     "hasActiveStory": true,
+#     "isViewer": true
+#   },
+#   "caption": "제주도 바다 #여행 #제주도 #바다",
+#   "translatedCaption": "Jeju sea #travel #jeju #sea",
+#   "hashtags": ["#여행", "#제주도", "#바다"]
+# }
+# ============================================================
+
+@baseUrl = http://localhost:8080
+
+### 현재 서버 코드 기준 게시물 생성
+POST {{baseUrl}}/api/posts
+Content-Type: application/json
+
+{
+  "media": [
+    {
+      "type": "IMAGE",
+      "url": "/uploads/posts/post-1.jpg",
+      "sortOrder": 0,
+      "originalFileName": "post-1.jpg"
+    }
+  ],
+  "caption": "제주도 바다 #여행 #제주도 #바다",
+  "translatedCaption": "Jeju sea #travel #jeju #sea",
+  "hashtags": ["#여행", "#제주도", "#바다"]
+}

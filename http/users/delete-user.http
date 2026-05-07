@@ -1,7 +1,7 @@
 # ============================================================
 # API: 사용자 삭제
 # Method: DELETE
-# Endpoint: /api/users/{userId}
+# Endpoint: /api/user/{userId}
 # Auth: 필요
 # Content-Type: application/json
 # Description:
@@ -11,7 +11,7 @@
 
 @baseUrl = http://localhost:8080
 @accessToken = replace-me
-@userId = 1
+@userId = 2
 
 # Path Parameters
 # - userId: number, required
@@ -27,18 +27,19 @@
 # - 삭제 후 GET /api/auth/me 401 또는 404
 
 ### 사용자 삭제
-DELETE {{baseUrl}}/api/users/{{userId}}
+# Success Response: 200 OK
+# {
+#   "result": "success",
+#   "message": "회원 탈퇴 성공. 해당 회원 정보는 더 이상 존재하지 않습니다."
+# }
+DELETE {{baseUrl}}/api/user/{{userId}}
 Authorization: Bearer {{accessToken}}
-
-# Success Response: 204 No Content
-# Body 없음
 
 ### 사용자 삭제 실패 - 권한 없음
-DELETE {{baseUrl}}/api/users/2
-Authorization: Bearer {{accessToken}}
-
 # Error Response: 403 Forbidden
 # {
 #   "code": "USER_FORBIDDEN",
 #   "message": "본인 계정만 삭제할 수 있습니다."
 # }
+DELETE {{baseUrl}}/api/user/2
+Authorization: Bearer {{accessToken}}

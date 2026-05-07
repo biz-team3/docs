@@ -1,7 +1,7 @@
 # ============================================================
 # API: 사용자 기본 정보 수정
 # Method: PATCH
-# Endpoint: /api/users/{userId}
+# Endpoint: /api/user/{userId}
 # Auth: 필요
 # Content-Type: application/json
 # Description:
@@ -12,13 +12,14 @@
 
 @baseUrl = http://localhost:8080
 @accessToken = replace-me
-@userId = 1
+@userId = 2
 
 # Path Parameters
 # - userId: number, required
 #
 # Request Body
 # - username: string, optional
+# - password: string, optional, 입력한 경우에만 변경
 # - name: string, optional
 # - bio: string, optional
 # - website: string, optional
@@ -37,12 +38,15 @@
 # - 수정 후 필요한 화면에서 GET /api/auth/me 또는 프로필 조회로 최신값 동기화
 
 ### 사용자 기본 정보 수정
-PATCH {{baseUrl}}/api/users/{{userId}}
-Authorization: Bearer {{accessToken}}
+# Success Response: 200 OK
+# 업데이트 성공
+PATCH {{baseUrl}}/api/user/{{userId}}
+#Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
   "username": "oosu.hada",
+  "password": "password",
   "name": "oosu",
   "bio": "리액트 개발자",
   "website": "",
@@ -50,20 +54,16 @@ Content-Type: application/json
   "accountVisibility": "PRIVATE"
 }
 
-# Success Response: 204 No Content
-# Body 없음
-
 ### 사용자 기본 정보 수정 실패 - 권한 없음
-PATCH {{baseUrl}}/api/users/2
+# Error Response: 403 Forbidden
+# {
+#   "code": "USER_FORBIDDEN",
+#   "message": "본인 계정만 수정할 수 있습니다."
+# }
+PATCH {{baseUrl}}/api/user/2
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
   "name": "not allowed"
 }
-
-# Error Response: 403 Forbidden
-# {
-#   "code": "USER_FORBIDDEN",
-#   "message": "본인 계정만 수정할 수 있습니다."
-# }

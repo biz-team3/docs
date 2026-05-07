@@ -32,6 +32,8 @@
 # - 잘못된 accountVisibility 400
 
 ### 사용자 생성
+# Success Response: 204 No Content
+# Body 없음
 POST {{baseUrl}}/api/users
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
@@ -45,10 +47,12 @@ Content-Type: application/json
   "accountVisibility": "PUBLIC"
 }
 
-# Success Response: 204 No Content
-# Body 없음
-
 ### 사용자 생성 실패 - username 중복
+# Error Response: 409 Conflict
+# {
+#   "code": "USER_USERNAME_DUPLICATED",
+#   "message": "이미 사용 중인 사용자 이름입니다."
+# }
 POST {{baseUrl}}/api/users
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
@@ -56,9 +60,3 @@ Content-Type: application/json
 {
   "username": "oosu.hada"
 }
-
-# Error Response: 409 Conflict
-# {
-#   "code": "USER_USERNAME_DUPLICATED",
-#   "message": "이미 사용 중인 사용자 이름입니다."
-# }

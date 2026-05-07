@@ -22,6 +22,7 @@
 # - name: string, optional
 # - bio: string, optional
 # - website: string, optional
+# - profileImageUrl: string, optional
 # - accountVisibility: "PUBLIC" | "PRIVATE", optional
 #
 # 제한 조건
@@ -45,6 +46,7 @@ Content-Type: application/json
   "name": "oosu",
   "bio": "리액트 개발자",
   "website": "",
+  "profileImageUrl": "/oosu.hada.jpg",
   "accountVisibility": "PRIVATE"
 }
 

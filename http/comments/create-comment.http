@@ -6,7 +6,7 @@
 # Content-Type: application/json
 # Description:
 # - 게시물 상세 모달에서 새 댓글을 작성한다.
-# - 생성 후 댓글 DTO와 게시물 commentCount 갱신이 필요하다.
+# - 생성 성공 후 프론트는 댓글 목록과 게시물 데이터를 재조회한다.
 # ============================================================
 
 @baseUrl = http://localhost:8080
@@ -25,7 +25,7 @@
 # - 댓글 생성 시 commentCount가 증가해야 한다.
 #
 # 테스트 필요 조건
-# - 댓글 생성 200 또는 201
+# - 댓글 생성 204
 # - 빈 댓글 400
 # - 비공개/미팔로우 게시물 댓글 생성 403
 
@@ -38,21 +38,8 @@ Content-Type: application/json
   "text": "이 댓글은 상세 모달에서 테스트합니다."
 }
 
-# Success Response: 201 Created
-# {
-#   "commentId": 100,
-#   "postId": 10,
-#   "author": {
-#     "userId": 1,
-#     "username": "oosu.hada"
-#   },
-#   "text": "이 댓글은 상세 모달에서 테스트합니다.",
-#   "createdAtText": "now",
-#   "viewerPermissions": {
-#     "canEdit": true,
-#     "canDelete": true
-#   }
-# }
+# Success Response: 204 No Content
+# Body 없음
 
 ### 댓글 생성 실패 - 빈 댓글
 POST {{baseUrl}}/api/posts/{{postId}}/comments

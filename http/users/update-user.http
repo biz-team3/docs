@@ -30,10 +30,10 @@
 # - 허용되지 않은 필드는 무시하거나 400으로 거절한다.
 #
 # 테스트 필요 조건
-# - 본인 수정 200
+# - 본인 수정 204
 # - 타 사용자 수정 403
 # - 중복 username 409
-# - 수정 후 GET /api/auth/me 최신값 동기화
+# - 수정 후 필요한 화면에서 GET /api/auth/me 또는 프로필 조회로 최신값 동기화
 
 ### 사용자 기본 정보 수정
 PATCH {{baseUrl}}/api/users/{{userId}}
@@ -48,13 +48,8 @@ Content-Type: application/json
   "accountVisibility": "PRIVATE"
 }
 
-# Success Response: 200 OK
-# {
-#   "userId": 1,
-#   "username": "oosu.hada",
-#   "name": "oosu",
-#   "profileImageUrl": "/oosu.hada.jpg"
-# }
+# Success Response: 204 No Content
+# Body 없음
 
 ### 사용자 기본 정보 수정 실패 - 권한 없음
 PATCH {{baseUrl}}/api/users/2

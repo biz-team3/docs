@@ -22,8 +22,7 @@
 # - bio: string, optional
 # - website: string, optional
 # - accountVisibility: "PUBLIC" | "PRIVATE", optional
-# - profileImageUrls: string[], optional, 업로드 API 응답 imageUrl 배열
-# - currentProfileImageIndex: number, optional
+# - profileImageUrl: string, optional, 업로드 API 응답 imageUrl
 #
 # 제한 조건
 # - 본인 프로필만 수정 가능하다.
@@ -48,8 +47,7 @@ Content-Type: application/json
   "bio": "리액트 개발자 💻 | 맛집 탐방 좋아함 🍕 | 일상 공유 ☕",
   "website": "",
   "accountVisibility": "PRIVATE",
-  "profileImageUrls": ["/oosu.hada.jpg"],
-  "currentProfileImageIndex": 0
+  "profileImageUrl": "/oosu.hada.jpg"
 }
 
 # Success Response: 200 OK
@@ -59,8 +57,6 @@ Content-Type: application/json
 #   "name": "oosu",
 #   "bio": "리액트 개발자 💻 | 맛집 탐방 좋아함 🍕 | 일상 공유 ☕",
 #   "website": "",
-#   "profileImageUrls": ["/oosu.hada.jpg"],
-#   "currentProfileImageIndex": 0,
 #   "profileImageUrl": "/oosu.hada.jpg",
 #   "followerCount": 2400,
 #   "followingCount": 321,

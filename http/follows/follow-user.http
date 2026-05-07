@@ -7,6 +7,7 @@
 # Description:
 # - 공개 계정은 즉시 FOLLOWING 상태가 된다.
 # - 비공개 계정은 PENDING 팔로우 요청 상태가 된다.
+# - 성공 후 프론트는 프로필 또는 팔로우 목록을 재조회해 관계/카운트를 반영한다.
 # ============================================================
 
 @baseUrl = http://localhost:8080
@@ -23,8 +24,8 @@
 # - 중복 요청/중복 팔로우는 멱등 처리한다.
 #
 # 테스트 필요 조건
-# - 공개 계정 팔로우 -> viewerRelation FOLLOWING
-# - 비공개 계정 팔로우 -> viewerRelation PENDING
+# - 공개 계정 팔로우 204
+# - 비공개 계정 팔로우 요청 204
 # - 자기 자신 팔로우 400
 # - 중복 팔로우 count 중복 증가 없음
 
@@ -35,13 +36,8 @@ Content-Type: application/json
 
 {}
 
-# Success Response: 200 OK
-# {
-#   "targetUserId": 2,
-#   "viewerRelation": "FOLLOWING",
-#   "canViewContent": true,
-#   "followerCount": 1201
-# }
+# Success Response: 204 No Content
+# Body 없음
 
 ### 사용자 팔로우 실패 - 자기 자신
 POST {{baseUrl}}/api/follows/1

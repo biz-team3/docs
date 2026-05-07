@@ -7,6 +7,7 @@
 # Description:
 # - 현재 사용자가 받은 PENDING 팔로우 요청을 수락한다.
 # - 수락 시 requester의 following과 target의 follower 관계가 실제로 생성된다.
+# - 성공 후 프론트는 팔로우 요청 목록과 알림 summary를 재조회한다.
 # ============================================================
 
 @baseUrl = http://localhost:8080
@@ -22,7 +23,7 @@
 # - 수락 후 팔로워/팔로잉 카운트를 동시에 갱신한다.
 #
 # 테스트 필요 조건
-# - 요청 수락 200
+# - 요청 수락 204
 # - 수락 후 팔로워 목록 포함
 # - 수락 후 알림 summary pending 감소
 # - 타 사용자 요청 수락 404 또는 403
@@ -34,11 +35,8 @@ Content-Type: application/json
 
 {}
 
-# Success Response: 200 OK
-# {
-#   "requestId": 10,
-#   "accepted": true
-# }
+# Success Response: 204 No Content
+# Body 없음
 
 ### 팔로우 요청 수락 실패 - 요청 없음
 POST {{baseUrl}}/api/follow-requests/999999/accept

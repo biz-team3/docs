@@ -8,6 +8,7 @@
 # - 게시물 이미지 배열 전체를 교체한다.
 # - 개별 삭제와 순서 변경은 프론트에서 정리한 media 배열을 sortOrder 순서로 다시 보낸다.
 # - 새 파일은 POST /api/media/posts로 먼저 업로드한 뒤 이 API에 url/media 정보를 넣는다.
+# - 수정 성공 후 프론트는 필요한 게시물 데이터를 재조회한다.
 # ============================================================
 
 @baseUrl = http://localhost:8080
@@ -60,15 +61,8 @@ Content-Type: application/json
   ]
 }
 
-# Success Response: 200 OK
-# {
-#   "postId": 10,
-#   "media": [
-#     { "mediaId": 1002, "type": "IMAGE", "url": "/uploads/posts/post-10-2.jpg", "sortOrder": 0 },
-#     { "mediaId": 1001, "type": "IMAGE", "url": "/uploads/posts/post-10-1.jpg", "sortOrder": 1 }
-#   ],
-#   "viewerPermissions": { "canEdit": true, "canDelete": true }
-# }
+# Success Response: 204 No Content
+# Body 없음
 
 ### 게시물 이미지 수정 실패 - 이미지 없음
 PUT {{baseUrl}}/api/posts/{{postId}}/media

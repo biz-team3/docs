@@ -7,6 +7,7 @@
 # Description:
 # - 현재 사용자가 받은 PENDING 팔로우 요청을 거절한다.
 # - 거절은 실제 팔로우 관계를 만들지 않고 대기 상태만 제거한다.
+# - 성공 후 프론트는 팔로우 요청 목록과 알림 summary를 재조회한다.
 # ============================================================
 
 @baseUrl = http://localhost:8080
@@ -22,7 +23,7 @@
 # - 거절 시 follower/following 카운트는 변경하지 않는다.
 #
 # 테스트 필요 조건
-# - 요청 거절 200 또는 204
+# - 요청 거절 204
 # - 거절 후 요청 목록에서 제거
 # - 거절 후 팔로워 목록에 미포함
 # - 알림 summary pending 감소
@@ -31,11 +32,8 @@
 DELETE {{baseUrl}}/api/follow-requests/{{requestId}}
 Authorization: Bearer {{accessToken}}
 
-# Success Response: 200 OK
-# {
-#   "requestId": 10,
-#   "rejected": true
-# }
+# Success Response: 204 No Content
+# Body 없음
 
 ### 팔로우 요청 거절 실패 - 요청 없음
 DELETE {{baseUrl}}/api/follow-requests/999999

@@ -7,6 +7,7 @@
 # Description:
 # - 게시물 caption, translatedCaption, hashtags를 수정한다.
 # - 미디어 수정은 PUT /api/posts/{postId}/media로 분리한다.
+# - 수정 성공 후 프론트는 필요한 게시물 데이터를 재조회한다.
 # ============================================================
 
 @baseUrl = http://localhost:8080
@@ -27,7 +28,7 @@
 # - 해시태그는 caption에서 재추출하거나 요청값을 검증해 저장한다.
 #
 # 테스트 필요 조건
-# - 내 게시물 본문 수정 200
+# - 내 게시물 본문 수정 204
 # - 타 사용자 게시물 수정 403
 # - 삭제된 게시물 수정 404
 
@@ -42,14 +43,8 @@ Content-Type: application/json
   "hashtags": ["#개발", "#MockAPI"]
 }
 
-# Success Response: 200 OK
-# {
-#   "postId": 10,
-#   "caption": "수정된 게시물 본문 #개발 #MockAPI",
-#   "translatedCaption": "수정된 게시물 본문 #개발 #MockAPI",
-#   "hashtags": ["#개발", "#MockAPI"],
-#   "viewerPermissions": { "canEdit": true, "canDelete": true }
-# }
+# Success Response: 204 No Content
+# Body 없음
 
 ### 게시물 본문 수정 실패 - 권한 없음
 PATCH {{baseUrl}}/api/posts/20

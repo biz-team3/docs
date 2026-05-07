@@ -37,8 +37,6 @@ Authorization: Bearer {{accessToken}}
 #   "name": "mijin",
 #   "bio": "사진과 여행",
 #   "website": "",
-#   "profileImageUrls": ["https://example.com/profile.jpg"],
-#   "currentProfileImageIndex": 0,
 #   "profileImageUrl": "https://example.com/profile.jpg",
 #   "followerCount": 1200,
 #   "followingCount": 220,

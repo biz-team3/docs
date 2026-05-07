@@ -6,7 +6,7 @@
 # Content-Type: multipart/form-data
 # Description:
 # - 프로필 편집에서 새 프로필 이미지를 먼저 업로드한다.
-# - 응답의 imageUrl을 PATCH /api/profiles/users/{userId}의 profileImageUrls에 반영한다.
+# - 응답의 imageUrl을 PATCH /api/profiles/users/{userId}의 profileImageUrl에 반영한다.
 # ============================================================
 
 @baseUrl = http://localhost:8080

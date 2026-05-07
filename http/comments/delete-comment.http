@@ -22,7 +22,7 @@
 # - commentCount는 0 미만이 되면 안 된다.
 #
 # 테스트 필요 조건
-# - 내 댓글 삭제 200 또는 204
+# - 내 댓글 삭제 204
 # - 타 사용자 댓글 삭제 403
 # - 삭제 후 목록에서 제거
 # - 삭제 후 게시물 commentCount 반영
@@ -31,11 +31,8 @@
 DELETE {{baseUrl}}/api/comments/{{commentId}}
 Authorization: Bearer {{accessToken}}
 
-# Success Response: 200 OK
-# {
-#   "commentId": 100,
-#   "deleted": true
-# }
+# Success Response: 204 No Content
+# Body 없음
 
 ### 댓글 삭제 실패 - 댓글 없음
 DELETE {{baseUrl}}/api/comments/999999

@@ -36,8 +36,6 @@ Authorization: Bearer {{accessToken}}
 #   "name": "oosu",
 #   "bio": "리액트 개발자",
 #   "website": "",
-#   "profileImageUrls": ["/oosu.hada.jpg"],
-#   "currentProfileImageIndex": 0,
 #   "profileImageUrl": "/oosu.hada.jpg",
 #   "followerCount": 2400,
 #   "followingCount": 321,

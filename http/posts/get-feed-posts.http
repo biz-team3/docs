@@ -21,7 +21,6 @@
 # 제한 조건
 # - 비공개 계정 게시물은 OWNER/FOLLOWING 관계일 때만 포함한다.
 # - author.userId와 viewerPermissions를 포함해 내 게시물의 수정/삭제 UI를 판단한다.
-# - previewComments는 최대 0~2개만 내려준다.
 #
 # 테스트 필요 조건
 # - 첫 페이지 10개 조회
@@ -41,10 +40,7 @@ Authorization: Bearer {{accessToken}}
 #       "author": {
 #         "userId": 1,
 #         "username": "oosu.hada",
-#         "displayName": "oosu",
-#         "profileImageUrl": "/oosu.hada.jpg",
-#         "hasActiveStory": true,
-#         "isViewer": true
+#         "profileImageUrl": "/oosu.hada.jpg"
 #       },
 #       "media": [
 #         { "mediaId": 1001, "type": "IMAGE", "url": "/oosu.hada.jpg", "sortOrder": 0 }
@@ -55,19 +51,10 @@ Authorization: Bearer {{accessToken}}
 #       "createdAtText": "now",
 #       "likeCount": 24,
 #       "commentCount": 8,
-#       "shareCount": 0,
 #       "likedByMe": false,
 #       "savedByMe": true,
 #       "suggested": false,
-#       "viewerFollowingAuthor": false,
-#       "viewerPermissions": { "canEdit": true, "canDelete": true },
-#       "previewComments": [
-#         {
-#           "commentId": 1,
-#           "author": { "userId": 2, "username": "mijinseooo" },
-#           "text": "좋아요."
-#         }
-#       ]
+#       "viewerPermissions": { "canEdit": true, "canDelete": true }
 #     }
 #   ],
 #   "page": 0,

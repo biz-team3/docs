@@ -18,7 +18,7 @@
 # - name: string, optional, 표시 이름
 # - bio: string, optional
 # - website: string, optional
-# - profileImageUrls: string[], optional
+# - profileImageUrl: string, optional
 # - accountVisibility: "PUBLIC" | "PRIVATE", optional, 기본 PUBLIC
 #
 # 제한 조건
@@ -27,7 +27,7 @@
 # - 1차 UI에는 연결하지 않는다.
 #
 # 테스트 필요 조건
-# - 신규 username 생성 200 또는 201
+# - 신규 username 생성 204
 # - 중복 username 409
 # - 잘못된 accountVisibility 400
 
@@ -41,17 +41,12 @@ Content-Type: application/json
   "name": "new user",
   "bio": "",
   "website": "",
-  "profileImageUrls": [],
+  "profileImageUrl": "",
   "accountVisibility": "PUBLIC"
 }
 
-# Success Response: 201 Created
-# {
-#   "userId": 20,
-#   "username": "new.user",
-#   "name": "new user",
-#   "profileImageUrl": ""
-# }
+# Success Response: 204 No Content
+# Body 없음
 
 ### 사용자 생성 실패 - username 중복
 POST {{baseUrl}}/api/users

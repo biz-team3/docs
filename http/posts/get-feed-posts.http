@@ -34,7 +34,7 @@ Authorization: Bearer {{accessToken}}
 
 # Success Response: 200 OK
 # {
-#   "posts": [
+#   "content": [
 #     {
 #       "postId": 10,
 #       "author": {
@@ -57,11 +57,13 @@ Authorization: Bearer {{accessToken}}
 #       "viewerPermissions": { "canEdit": true, "canDelete": true }
 #     }
 #   ],
-#   "page": 0,
-#   "size": 10,
-#   "totalElements": 30,
-#   "totalPages": 3,
-#   "hasNext": true
+#   "pageRequest": {
+#     "page": 0,
+#     "size": 10
+#   },
+#   "total": 30,
+#   "hasNext": true,
+#   "totalPages": 3
 # }
 
 ### 홈 피드 게시물 조회 실패 - 인증 없음

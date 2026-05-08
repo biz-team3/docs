@@ -32,21 +32,19 @@
 # - 잘못된 accountVisibility 400
 
 ### 사용자 생성
-POST {{baseUrl}}/api/users
-Authorization: Bearer {{accessToken}}
+POST {{baseUrl}}/api/user
 Content-Type: application/json
 
 {
   "username": "new.user",
+  "password": "123",
   "name": "new user",
-  "bio": "",
-  "website": "",
-  "profileImageUrl": "",
+  "bio": "aa",
+  "website": "aa",
+  "profileImg": "asd",
+  "profileImageUrl": "./jpg",
   "accountVisibility": "PUBLIC"
 }
-
-# Success Response: 204 No Content
-# Body 없음
 
 ### 사용자 생성 실패 - username 중복
 POST {{baseUrl}}/api/users

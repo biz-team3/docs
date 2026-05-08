@@ -37,21 +37,18 @@
 # - 수정 후 필요한 화면에서 GET /api/auth/me 또는 프로필 조회로 최신값 동기화
 
 ### 사용자 기본 정보 수정
-PATCH {{baseUrl}}/api/users/{{userId}}
-Authorization: Bearer {{accessToken}}
+PATCH {{baseUrl}}/api/user/{{userId}}
 Content-Type: application/json
 
 {
   "username": "oosu.hada",
+  "password": "asda",
   "name": "oosu",
   "bio": "리액트 개발자",
   "website": "",
   "profileImageUrl": "/oosu.hada.jpg",
   "accountVisibility": "PRIVATE"
 }
-
-# Success Response: 204 No Content
-# Body 없음
 
 ### 사용자 기본 정보 수정 실패 - 권한 없음
 PATCH {{baseUrl}}/api/users/2

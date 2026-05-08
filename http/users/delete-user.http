@@ -27,8 +27,7 @@
 # - 삭제 후 GET /api/auth/me 401 또는 404
 
 ### 사용자 삭제
-DELETE {{baseUrl}}/api/users/{{userId}}
-Authorization: Bearer {{accessToken}}
+DELETE {{baseUrl}}/api/user/{{userId}}
 
 # Success Response: 204 No Content
 # Body 없음

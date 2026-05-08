@@ -1,0 +1,47 @@
+{
+  "content": [
+    {
+      "accountVis": "PRIVATE",
+      "bio": "리액트 개발자",
+      "createdAt": null,
+      "deleteAt": null,
+      "name": "oosu",
+      "profileImg": "/oosu.hada.jpg",
+      "updateAt": null,
+      "userId": 2,
+      "username": "oosu.hada",
+      "website": null
+    },
+    {
+      "accountVis": "PUBLIC",
+      "bio": "aa",
+      "createdAt": null,
+      "deleteAt": null,
+      "name": "new user",
+      "profileImg": "./jpg",
+      "updateAt": null,
+      "userId": 6,
+      "username": "new.user",
+      "website": "aa"
+    },
+    {
+      "accountVis": "PUBLIC",
+      "bio": "a",
+      "createdAt": null,
+      "deleteAt": null,
+      "name": "asd",
+      "profileImg": "/asd",
+      "updateAt": null,
+      "userId": 7,
+      "username": "asd",
+      "website": "asd"
+    }
+  ],
+  "pageRequest": {
+    "page": 0,
+    "size": 20
+  },
+  "total": 3,
+  "hasNext": false,
+  "totalPages": 1
+}

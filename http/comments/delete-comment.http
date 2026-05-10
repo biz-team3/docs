@@ -11,7 +11,7 @@
 
 @baseUrl = http://localhost:8080
 @accessToken = replace-me
-@commentId = 100
+@commentId = 1
 
 # Path Parameters
 # - commentId: number, required
@@ -28,7 +28,7 @@
 # - 삭제 후 게시물 commentCount 반영
 
 ### 댓글 삭제
-DELETE {{baseUrl}}/api/comments/{{commentId}}
+DELETE {{baseUrl}}/api/posts/comments/{{commentId}}
 Authorization: Bearer {{accessToken}}
 
 # Success Response: 204 No Content

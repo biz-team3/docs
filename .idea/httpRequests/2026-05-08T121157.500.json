@@ -1,9 +1,0 @@
-{
-  "detail": "서버 오류가 발생했습니다.",
-  "instance": "/api/user",
-  "status": 500,
-  "title": "500",
-  "type": "/docs/index.html#error-code-list",
-  "exception": "HttpMessageNotReadableException",
-  "timestamp": "2026-05-08T12:11:57.494416"
-}

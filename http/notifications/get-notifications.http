@@ -36,7 +36,7 @@ Authorization: Bearer {{accessToken}}
 #       "actorUsername": "mijinseooo",
 #       "message": "님이 회원님의 게시물을 좋아합니다",
 #       "imageUrl": "https://example.com/profile.jpg",
-#       "createdAtText": "12m",
+#       "createdAt": "2026-05-08T00:45:16Z",
 #       "read": false
 #     }
 #   ]

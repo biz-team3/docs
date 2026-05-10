@@ -1,9 +1,0 @@
-{
-  "detail": "회원정보 수정에 실패하였습니다",
-  "instance": "/api/user/2",
-  "status": 500,
-  "title": "500",
-  "type": "/docs/index.html#error-code-list",
-  "exception": "DatabaseException",
-  "timestamp": "2026-05-08T12:19:06.511555"
-}

@@ -12,7 +12,7 @@
 
 @baseUrl = http://localhost:8080
 @accessToken = replace-me
-@commentId = 100
+@commentId = 1
 
 # Path Parameters
 # - commentId: number, required
@@ -32,16 +32,13 @@
 # - 삭제된 댓글 수정 404
 
 ### 댓글 수정
-PATCH {{baseUrl}}/api/comments/{{commentId}}
-Authorization: Bearer {{accessToken}}
+PATCH {{baseUrl}}/api/posts/comments/{{commentId}}
 Content-Type: application/json
 
 {
   "text": "수정된 댓글입니다."
 }
 
-# Success Response: 204 No Content
-# Body 없음
 
 ### 댓글 수정 실패 - 권한 없음
 PATCH {{baseUrl}}/api/comments/1

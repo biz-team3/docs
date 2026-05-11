@@ -32,7 +32,7 @@
 # - 허용되지 않은 필드는 무시하거나 400으로 거절한다.
 #
 # 테스트 필요 조건
-# - 본인 수정 204
+# - 본인 수정 200
 # - 타 사용자 수정 403
 # - 중복 username 409
 # - 수정 후 필요한 화면에서 GET /api/auth/me 또는 프로필 조회로 최신값 동기화
@@ -41,7 +41,7 @@
 # Success Response: 200 OK
 # 업데이트 성공
 PATCH {{baseUrl}}/api/user/{{userId}}
-#Authorization: Bearer {{accessToken}}
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {

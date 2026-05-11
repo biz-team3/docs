@@ -11,7 +11,7 @@
 
 @baseUrl = http://localhost:8080
 @accessToken = replace-me
-@postId = 10
+@postId = 1
 
 # Path Parameters
 # - postId: number, required
@@ -31,15 +31,12 @@
 
 ### 댓글 생성
 POST {{baseUrl}}/api/posts/{{postId}}/comments
-Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
   "text": "이 댓글은 상세 모달에서 테스트합니다."
 }
 
-# Success Response: 204 No Content
-# Body 없음
 
 ### 댓글 생성 실패 - 빈 댓글
 POST {{baseUrl}}/api/posts/{{postId}}/comments
@@ -50,8 +47,3 @@ Content-Type: application/json
   "text": ""
 }
 
-# Error Response: 400 Bad Request
-# {
-#   "code": "COMMENT_TEXT_REQUIRED",
-#   "message": "댓글 내용을 입력해 주세요."
-# }

@@ -27,7 +27,7 @@
 # - 지원하지 않는 파일 타입 400
 
 ### 프로필 이미지 업로드
-POST {{baseUrl}}/api/media/profile-images
+POST {{baseUrl}}/api/user/media/profile-images
 Authorization: Bearer {{accessToken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
 
@@ -47,7 +47,7 @@ Content-Type: image/jpeg
 # }
 
 ### 프로필 이미지 업로드 실패 - 파일 크기 초과
-POST {{baseUrl}}/api/media/profile-images
+POST {{baseUrl}}/api//user/media/profile-images
 Authorization: Bearer {{accessToken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
 

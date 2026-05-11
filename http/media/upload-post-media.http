@@ -29,8 +29,7 @@
 # - 지원하지 않는 파일 타입 400
 
 ### 게시물 이미지 업로드
-POST {{baseUrl}}/api/media/posts
-Authorization: Bearer {{accessToken}}
+POST {{baseUrl}}/api/posts/media
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
 
 ------WebKitFormBoundaryTest
@@ -55,7 +54,7 @@ Content-Type: image/jpeg
 # }
 
 ### 게시물 이미지 업로드 실패 - 파일 타입 오류
-POST {{baseUrl}}/api/media/posts
+POST {{baseUrl}}/api/posts/media
 Authorization: Bearer {{accessToken}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
 

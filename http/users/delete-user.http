@@ -1,7 +1,7 @@
 # ============================================================
 # API: 사용자 삭제
 # Method: DELETE
-# Endpoint: /api/users/{userId}
+# Endpoint: /api/user/{userId}
 # Auth: 필요
 # Content-Type: application/json
 # Description:
@@ -11,7 +11,7 @@
 
 @baseUrl = http://localhost:8080
 @accessToken = replace-me
-@userId = 1
+@userId = 2
 
 # Path Parameters
 # - userId: number, required
@@ -22,22 +22,21 @@
 # - 실제 운영에서는 soft delete 여부를 백엔드 정책으로 확정한다.
 #
 # 테스트 필요 조건
-# - 본인 삭제 204
+# - 본인 삭제 200
 # - 타 사용자 삭제 403
 # - 삭제 후 GET /api/auth/me 401 또는 404
 
 ### 사용자 삭제
+# Success Response: 200 OK
+# 삭제 성공
 DELETE {{baseUrl}}/api/user/{{userId}}
-
-# Success Response: 204 No Content
-# Body 없음
-
-### 사용자 삭제 실패 - 권한 없음
-DELETE {{baseUrl}}/api/users/2
 Authorization: Bearer {{accessToken}}
 
+### 사용자 삭제 실패 - 권한 없음
 # Error Response: 403 Forbidden
 # {
 #   "code": "USER_FORBIDDEN",
 #   "message": "본인 계정만 삭제할 수 있습니다."
 # }
+DELETE {{baseUrl}}/api/user/2
+Authorization: Bearer {{accessToken}}

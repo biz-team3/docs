@@ -31,6 +31,7 @@
 
 ### 사용자 목록 조회 - 첫 페이지
 GET {{baseUrl}}/api/user?page={{page}}&size={{size}}
+Authorization: Bearer {{accessToken}}
 
 # Success Response: 200 OK
 # {
@@ -41,8 +42,8 @@ GET {{baseUrl}}/api/user?page={{page}}&size={{size}}
 #       "name": "oosu",
 #       "bio": "리액트 개발자",
 #       "website": "",
-#       "profileImageUrl": "/oosu.hada.jpg",
-#       "accountVisibility": "PRIVATE"
+#       "profileImg": "/oosu.hada.jpg",
+#       "accountVis": "PRIVATE"
 #     }
 #   ],
 #   "pageRequest": {
@@ -67,8 +68,8 @@ Authorization: Bearer {{accessToken}}
 #       "name": "next user",
 #       "bio": "",
 #       "website": "",
-#       "profileImageUrl": "",
-#       "accountVisibility": "PUBLIC"
+#       "profileImg": "",
+#       "accountVis": "PUBLIC"
 #     }
 #   ],
 #   "pageRequest": {

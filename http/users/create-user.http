@@ -1,7 +1,7 @@
 # ============================================================
 # API: 사용자 생성
 # Method: POST
-# Endpoint: /api/users
+# Endpoint: /api/user
 # Auth: 정책 확정 필요
 # Content-Type: application/json
 # Description:
@@ -15,6 +15,7 @@
 
 # Request Body
 # - username: string, required, 고유 사용자 이름
+# - password: string, required
 # - name: string, optional, 표시 이름
 # - bio: string, optional
 # - website: string, optional
@@ -27,11 +28,13 @@
 # - 1차 UI에는 연결하지 않는다.
 #
 # 테스트 필요 조건
-# - 신규 username 생성 204
+# - 신규 username 생성 200
 # - 중복 username 409
 # - 잘못된 accountVisibility 400
 
 ### 사용자 생성
+# Success Response: 200 OK
+# 회원가입 성공
 POST {{baseUrl}}/api/user
 Content-Type: application/json
 
@@ -41,22 +44,21 @@ Content-Type: application/json
   "name": "new user",
   "bio": "aa",
   "website": "aa",
-  "profileImg": "asd",
   "profileImageUrl": "./jpg",
   "accountVisibility": "PUBLIC"
 }
 
 ### 사용자 생성 실패 - username 중복
-POST {{baseUrl}}/api/users
-Authorization: Bearer {{accessToken}}
-Content-Type: application/json
-
-{
-  "username": "oosu.hada"
-}
-
 # Error Response: 409 Conflict
 # {
 #   "code": "USER_USERNAME_DUPLICATED",
 #   "message": "이미 사용 중인 사용자 이름입니다."
 # }
+POST {{baseUrl}}/api/user
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "oosu.hada",
+  "password": "123"
+}

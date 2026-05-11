@@ -1,0 +1,63 @@
+# ============================================================
+# API: PENDING 팔로우 요청 목록 조회
+# Method: GET
+# Endpoint: /api/follows/requests
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - 현재 로그인한 사용자(비공개 계정)에게 온 대기 중인 팔로우 요청 목록을 조회한다.
+# - PENDING 상태의 요청만 반환한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# Response Parameters
+# - requestId: 팔로우 요청 PK
+# - requesterUserId: 요청을 보낸 사용자 ID
+# - requesterName: 요청자 이름
+# - requesterProfileImg: 요청자 프로필 이미지
+# - status: 요청 상태 (PENDING / ACCEPTED / REJECTED)
+# - requestedAt: 요청 생성 시간
+#
+# 제한 조건
+# - 로그인한 사용자(수신자)의 요청만 조회 가능하다.
+# - 비공개 계정 사용자만 팔로우 요청을 받을 수 있다.
+# - PENDING 상태의 요청만 반환된다.
+#
+# 테스트 필요 조건
+# - 팔로우 요청 목록 조회
+# - 요청자 정보 확인 (name, profileImg)
+# - 요청 시간(requestedAt) 확인
+# - 요청 없을 시 빈 배열 반환
+
+### PENDING 팔로우 요청 목록 조회
+GET {{baseUrl}}/api/follows/requests
+Authorization: Bearer {{accessToken}}
+
+# Success Response: 200 OK
+# [
+#   {
+#     "requestId": 1,
+#     "requesterUserId": 2,
+#     "requesterName": "mijin",
+#     "requesterProfileImg": "https://example.com/profile.jpg",
+#     "status": "PENDING",
+#     "requestedAt": "2024-01-01T10:30:00"
+#   },
+#   {
+#     "requestId": 2,
+#     "requesterUserId": 5,
+#     "requesterName": "daegu",
+#     "requesterProfileImg": "https://example.com/profile5.jpg",
+#     "status": "PENDING",
+#     "requestedAt": "2024-01-03T14:15:00"
+#   }
+# ]
+
+### 팔로우 요청 없을 시
+GET {{baseUrl}}/api/follows/requests
+Authorization: Bearer {{accessToken}}
+
+# Success Response: 200 OK
+# []

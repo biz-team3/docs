@@ -50,7 +50,6 @@ Authorization: Bearer {{accessToken}}
 #   "commentCount": 8,
 #   "likedByMe": false,
 #   "savedByMe": false,
-#   "suggested": false,
 #   "isOwner": true
 # }
 

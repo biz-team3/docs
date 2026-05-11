@@ -1,0 +1,79 @@
+# ============================================================
+# API: 스토리 생성
+# Method: POST
+# Endpoint: /api/stories
+# Auth: 필요
+# Content-Type: multipart/form-data
+# Description:
+# - 이미지 1장으로 새 스토리를 생성한다.
+# - 스토리는 생성 시각 기준 24시간 동안 홈/프로필 스토리에 노출된다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+
+# Multipart Form Data
+# - file: File, required, 이미지 1장
+#
+# 제한 조건
+# - 현재 로그인 사용자의 스토리로 생성한다.
+# - userId는 요청 본문으로 받지 않고 AccessToken 기준으로 판단한다.
+# - 1차 MVP는 이미지 1장만 허용한다.
+# - caption, 하이라이트, 조회 기록은 이번 범위에서 제외한다.
+# - 응답에는 expiresAt을 노출하지 않는다.
+#
+# 테스트 필요 조건
+# - 이미지 1장 스토리 생성
+# - 인증 없음 401
+# - 파일 없음 400
+# - 지원하지 않는 파일 타입 400
+# - 생성 후 GET /api/stories/feed에서 내 그룹에 포함
+
+### 스토리 생성
+POST {{baseUrl}}/api/stories
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
+
+------WebKitFormBoundaryTest
+Content-Disposition: form-data; name="file"; filename="story-1.jpg"
+Content-Type: image/jpeg
+
+< ./fixtures/story-1.jpg
+------WebKitFormBoundaryTest--
+
+# Success Response: 201 Created
+# {
+#   "storyId": 101,
+#   "userId": 1,
+#   "imageUrl": "/uploads/stories/story-1.jpg",
+#   "createdAt": "2026-05-08T00:45:16Z",
+#   "isOwner": true
+# }
+
+### 스토리 생성 실패 - 인증 없음
+POST {{baseUrl}}/api/stories
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
+
+------WebKitFormBoundaryTest
+Content-Disposition: form-data; name="file"; filename="story-1.jpg"
+Content-Type: image/jpeg
+
+< ./fixtures/story-1.jpg
+------WebKitFormBoundaryTest--
+
+# Error Response: 401 Unauthorized
+# {
+#   "code": "AUTH_REQUIRED",
+#   "message": "로그인이 필요합니다."
+# }
+
+### 스토리 생성 실패 - 파일 없음
+POST {{baseUrl}}/api/stories
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryTest
+
+# Error Response: 400 Bad Request
+# {
+#   "code": "STORY_IMAGE_REQUIRED",
+#   "message": "스토리 이미지는 1장 필요합니다."
+# }

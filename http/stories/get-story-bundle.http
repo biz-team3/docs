@@ -18,14 +18,16 @@
 #
 # 제한 조건
 # - 사용자 없음은 404를 반환한다.
-# - 비공개/미팔로우 계정은 stories 빈 배열을 반환하거나 403 정책 중 하나로 확정한다.
-# - 1차 프론트는 빈 배열이면 콘텐츠를 보여주지 않는다.
+# - 비공개/미팔로우 계정은 stories 빈 배열을 반환한다.
+# - deleted_at이 없고 created_at 기준 24시간 이내인 스토리만 반환한다.
+# - isOwner로 내 스토리 라벨/삭제 UI를 판단한다.
 #
 # 테스트 필요 조건
 # - 내 스토리 묶음 조회
 # - 다중 스토리 좌우 이동
 # - 비공개/미팔로우 계정 접근 제한
-# - 스토리 내 프로필 이동 userId 확인
+# - 24시간 지난 스토리 제외
+# - 내 스토리 isOwner true
 
 ### 사용자 스토리 묶음 조회
 GET {{baseUrl}}/api/stories/{{userId}}
@@ -36,9 +38,15 @@ Authorization: Bearer {{accessToken}}
 #   "userId": 1,
 #   "username": "oosu.hada",
 #   "profileImageUrl": "/oosu.hada.jpg",
-#   "isMe": true,
+#   "isOwner": true,
 #   "stories": [
-#     { "storyId": 101, "userId": 1, "imageUrl": "/oosu.hada.jpg", "createdAt": "2026-05-08T00:45:16Z" }
+#     {
+#       "storyId": 101,
+#       "userId": 1,
+#       "imageUrl": "/uploads/stories/story-1.jpg",
+#       "createdAt": "2026-05-08T00:45:16Z",
+#       "isOwner": true
+#     }
 #   ]
 # }
 

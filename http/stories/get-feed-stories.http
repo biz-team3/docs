@@ -14,14 +14,18 @@
 
 # 제한 조건
 # - 비공개 계정의 스토리는 OWNER/FOLLOWING 관계에서만 반환한다.
-# - 스토리가 없는 사용자는 storyGroups에서 제외한다.
+# - 내 스토리 그룹은 생성 진입 UI를 위해 스토리가 없어도 반환할 수 있다.
+# - 타 사용자 중 스토리가 없는 사용자는 storyGroups에서 제외한다.
 # - 각 그룹은 다중 스토리 페이징을 위해 stories 배열을 포함한다.
+# - deleted_at이 없고 created_at 기준 24시간 이내인 스토리만 반환한다.
+# - isOwner로 내 스토리 라벨/삭제 UI를 판단한다.
 #
 # 테스트 필요 조건
 # - 내 스토리 포함
 # - 팔로잉 사용자 스토리 포함
 # - 비공개/미팔로우 사용자 스토리 제외
-# - 스토리 10개 mock 기준 좌우 이동 확인
+# - 24시간 지난 스토리 제외
+# - 내 스토리 그룹 isOwner true
 
 ### 홈 스토리 피드 조회
 GET {{baseUrl}}/api/stories/feed
@@ -34,9 +38,15 @@ Authorization: Bearer {{accessToken}}
 #       "userId": 1,
 #       "username": "oosu.hada",
 #       "profileImageUrl": "/oosu.hada.jpg",
-#       "isMe": true,
+#       "isOwner": true,
 #       "stories": [
-#         { "storyId": 101, "userId": 1, "imageUrl": "/oosu.hada.jpg", "createdAt": "2026-05-08T00:45:16Z" }
+#         {
+#           "storyId": 101,
+#           "userId": 1,
+#           "imageUrl": "/uploads/stories/story-1.jpg",
+#           "createdAt": "2026-05-08T00:45:16Z",
+#           "isOwner": true
+#         }
 #       ]
 #     }
 #   ]

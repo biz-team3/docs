@@ -39,10 +39,10 @@
 ```text
 auth           로그인, 로그아웃, 현재 사용자
 users          사용자 생성/조회/수정/삭제
-profiles       프로필 조회/수정, 프로필 게시물/스토리
+profiles       프로필 조회/수정, 프로필 게시물
 posts          피드, 게시물 상세, 게시물 CRUD, 좋아요, 저장
 comments       댓글 CRUD
-stories        스토리 피드, 사용자 스토리 묶음
+stories        스토리 피드, 사용자 스토리 묶음, 생성/삭제
 follows        팔로워/팔로잉 목록, 팔로우/언팔로우
 notifications  알림, 팔로우 요청
 media          게시물/프로필 이미지 업로드

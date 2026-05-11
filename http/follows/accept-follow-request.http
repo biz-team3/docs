@@ -1,0 +1,66 @@
+# ============================================================
+# API: 팔로우 요청 수락
+# Method: POST
+# Endpoint: /api/follows/requests/{requestId}/accept
+# Auth: 필요
+# Content-Type: application/json
+# Description:
+# - PENDING 상태의 팔로우 요청을 수락한다.
+# - 요청 상태를 ACCEPTED로 변경하고 follows 테이블에 실제 팔로우 관계를 생성한다.
+# - 수락 후 팔로우 카운트(following)가 증가한다.
+# ============================================================
+
+@baseUrl = http://localhost:8080
+@accessToken = replace-me
+@requestId = 1
+
+# Path Parameters
+# - requestId: number, required, 수락할 팔로우 요청 PK
+#
+# 제한 조건
+# - 로그인한 사용자가 요청의 수신자여야 한다.
+# - PENDING 상태의 요청만 수락할 수 있다.
+# - 수락 성공 후 두 사용자 간 follow 관계가 생성된다.
+# - 이미 팔로우 중인 사용자의 요청을 수락할 수 없다.
+#
+# 테스트 필요 조건
+# - PENDING 요청 수락 → ACCEPTED + follows 관계 생성
+# - 팔로우 카운트(following) 증가 확인
+# - 요청 소유권 검증 (다른 사용자 요청 수락 시도 실패)
+# - 이미 수락/거절된 요청 재처리 불가
+
+### 팔로우 요청 수락
+POST {{baseUrl}}/api/follows/requests/{{requestId}}/accept
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+# Success Response: 204 No Content
+# Body 없음
+
+### 팔로우 요청 수락 실패 - 요청 없음
+POST {{baseUrl}}/api/follows/requests/99999/accept
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+# Error Response: 404 Not Found
+# {
+#   "code": "FOLLOW_REQUEST_NOT_FOUND",
+#   "message": "팔로우 요청을 찾을 수 없습니다."
+# }
+
+### 팔로우 요청 수락 실패 - 권한 없음
+POST {{baseUrl}}/api/follows/requests/{{requestId}}/accept
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+# Error Response: 403 Forbidden
+# {
+#   "code": "FOLLOW_REQUEST_FORBIDDEN",
+#   "message": "이 요청에 대한 권한이 없습니다."
+# }

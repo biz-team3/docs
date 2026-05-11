@@ -1,33 +1,38 @@
 # ============================================================
 # API: 팔로워 목록 조회
 # Method: GET
-# Endpoint: /api/users/{userId}/followers
+# Endpoint: /api/follows/{userId}/followers
 # Auth: 필요
 # Content-Type: application/json
 # Description:
 # - 특정 사용자를 팔로우하는 사용자 목록을 조회한다.
-# - 팔로워/팔로잉 팝업에서 사용하며 20개 단위 무한 스크롤을 기준으로 한다.
+# - PENDING 팔로우 요청은 포함하지 않으며, 수락된 팔로우 관계만 반환한다.
 # ============================================================
 
 @baseUrl = http://localhost:8080
 @accessToken = replace-me
-@userId = 1
+@userId = 2
 @page = 0
 @size = 20
-@query =
 
 # Path Parameters
 # - userId: number, required
 #
 # Query Parameters
-# - page: number, optional, 기본 0
-# - size: number, optional, 기본 20
-# - q: string, optional, username/name 검색어
+# - page: number, required, 0부터 시작
+# - size: number, required, 한 번에 가져올 개수
+#
+# 응답 형식
+# - PageResponse<FollowUserResponse>
+# - content: userId, name, profileImg, accountVis, followedAt
+# - pageRequest: 요청 page/size
+# - total: 전체 팔로워 수
+# - totalPages, hasNext: 무한 스크롤 제어용
 #
 # 제한 조건
 # - PENDING 팔로우 요청은 팔로워 목록에 포함하지 않는다.
 # - 실제 수락된 FOLLOWING 관계만 포함한다.
-# - 각 항목은 현재 viewer와의 viewerRelation을 포함한다.
+# - accountVis: 팔로워의 공개/비공개 여부 (PUBLIC/PRIVATE)
 #
 # 테스트 필요 조건
 # - 팔로워 20개 단위 조회
@@ -36,7 +41,7 @@
 # - 사용자 없음 404
 
 ### 팔로워 목록 조회
-GET {{baseUrl}}/api/users/{{userId}}/followers?page={{page}}&size={{size}}&q={{query}}
+GET {{baseUrl}}/api/follows/{{userId}}/followers?page={{page}}&size={{size}}
 Authorization: Bearer {{accessToken}}
 
 # Success Response: 200 OK
@@ -44,11 +49,10 @@ Authorization: Bearer {{accessToken}}
 #   "content": [
 #     {
 #       "userId": 2,
-#       "username": "mijinseooo",
 #       "name": "mijin",
-#       "profileImageUrl": "https://example.com/profile.jpg",
-#       "viewerRelation": "FOLLOWING",
-#       "isViewer": false
+#       "profileImg": "https://example.com/profile.jpg",
+#       "accountVis": "PUBLIC",
+#       "followedAt": "2024-01-01T10:30:00"
 #     }
 #   ],
 #   "pageRequest": {
@@ -56,12 +60,12 @@ Authorization: Bearer {{accessToken}}
 #     "size": 20
 #   },
 #   "total": 41,
-#   "hasNext": true,
-#   "totalPages": 3
+#   "totalPages": 3,
+#   "hasNext": true
 # }
 
 ### 팔로워 목록 조회 실패 - 사용자 없음
-GET {{baseUrl}}/api/users/999999/followers?page=0&size=20
+GET {{baseUrl}}/api/follows/999999/followers?page={{page}}&size={{size}}
 Authorization: Bearer {{accessToken}}
 
 # Error Response: 404 Not Found

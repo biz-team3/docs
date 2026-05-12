@@ -41,14 +41,8 @@ Content-Type: image/jpeg
 < ./fixtures/story-1.jpg
 ------WebKitFormBoundaryTest--
 
-# Success Response: 201 Created
-# {
-#   "storyId": 101,
-#   "userId": 1,
-#   "imageUrl": "/uploads/stories/story-1.jpg",
-#   "createdAt": "2026-05-08T00:45:16Z",
-#   "isOwner": true
-# }
+# Success Response: 204 No Content
+# Body 없음
 
 ### 스토리 생성 실패 - 인증 없음
 POST {{baseUrl}}/api/stories

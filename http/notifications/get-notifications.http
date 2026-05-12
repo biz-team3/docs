@@ -15,13 +15,15 @@
 # 제한 조건
 # - 현재 로그인 사용자에게 속한 알림만 반환한다.
 # - 알림에는 read 여부를 포함한다.
-# - 오늘/이번 주 섹션 구분이 필요하면 section 또는 createdAt을 내려준다.
+# - 프론트는 actorUsername으로 프로필 이동을 처리한다.
+# - 팔로우 알림은 viewerRelation으로 버튼 상태를 판단한다.
 #
 # 테스트 필요 조건
 # - 알림 목록 조회
 # - 빈 알림 상태
 # - unread 알림 badge와 summary 동기화
 # - 패널 오픈 후 읽음 처리
+# - 팔로우 알림에서 프로필 이동 / follow, unfollow 버튼 처리
 
 ### 알림 목록 조회
 GET {{baseUrl}}/api/notifications
@@ -32,13 +34,29 @@ Authorization: Bearer {{accessToken}}
 #   "notifications": [
 #     {
 #       "notificationId": 1,
+#       "actorUserId": 3,
+#       "actorUsername": "mijinseooo",
 #       "type": "LIKE",
 #       "actorName": "mijinseooo",
 #       "actorImageUrl": "/uploads/profiles/2026/05/profile.jpg",
 #       "actorCount": 1,
 #       "targetImageUrl": "/uploads/posts/2026/05/post.jpg",
+#       "viewerRelation": "NOT_FOLLOWING",
 #       "createdAt": "2026-05-08T00:45:16Z",
 #       "read": false
+#     },
+#     {
+#       "notificationId": 2,
+#       "actorUserId": 2,
+#       "actorUsername": "seoul.soul_mate",
+#       "type": "FOLLOW",
+#       "actorName": "seoul.soul_mate",
+#       "actorImageUrl": "/uploads/profiles/2026/05/seoul.jpg",
+#       "actorCount": 0,
+#       "targetImageUrl": null,
+#       "viewerRelation": "FOLLOWING",
+#       "createdAt": "2026-05-10T10:15:00",
+#       "read": true
 #     }
 #   ]
 # }

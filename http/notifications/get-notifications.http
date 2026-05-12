@@ -33,9 +33,10 @@ Authorization: Bearer {{accessToken}}
 #     {
 #       "notificationId": 1,
 #       "type": "LIKE",
-#       "actorUsername": "mijinseooo",
-#       "message": "님이 회원님의 게시물을 좋아합니다",
-#       "imageUrl": "https://example.com/profile.jpg",
+#       "actorName": "mijinseooo",
+#       "actorImageUrl": "/uploads/profiles/2026/05/profile.jpg",
+#       "actorCount": 1,
+#       "targetImageUrl": "/uploads/posts/2026/05/post.jpg",
 #       "createdAt": "2026-05-08T00:45:16Z",
 #       "read": false
 #     }

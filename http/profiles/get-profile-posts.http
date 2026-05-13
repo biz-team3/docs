@@ -23,7 +23,7 @@
 # - size: number, optional, 기본 12
 #
 # 제한 조건
-# - 비공개 계정이고 viewerRelation이 FOLLOWING/OWNER가 아니면 content는 빈 배열이다.
+# - 비공개 계정이고 viewerRelation이 FOLLOWING/SELF가 아니면 content는 빈 배열이다.
 # - canViewContent는 프로필 조회 응답에서 판단한다.
 # - 다중 이미지 게시물은 mediaCount > 1 기준으로 표시한다.
 #
@@ -34,6 +34,7 @@
 
 ### 프로필 게시물 목록 조회
 GET {{baseUrl}}/api/profiles/users/{{userId}}/posts?page={{page}}&size={{size}}
+Authorization: Bearer {{accessToken}}
 
 # Success Response: 200 OK
 # {

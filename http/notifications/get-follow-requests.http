@@ -16,7 +16,8 @@
 # - 현재 로그인 사용자가 targetUserId인 PENDING 요청만 반환한다.
 # - 이미 수락/거절된 요청은 반환하지 않는다.
 # - 팔로워 목록에는 아직 포함하지 않는다.
-# - mutualText 는 공통 팔로워 계산 정책 확정 전까지 null 일 수 있다.
+# - 공통 팔로워 문구는 mutualFollowerName/mutualFollowerCount를 조합해 프론트에서 만든다.
+# - createdAt은 팔로우 요청 시점을 1d, 2w 같은 상대 시간으로 표시할 때 사용한다.
 #
 # 테스트 필요 조건
 # - PENDING 요청 목록 표시
@@ -36,8 +37,10 @@ Authorization: Bearer {{accessToken}}
 #       "requesterId": 2,
 #       "targetUserId": 1,
 #       "requesterName": "mijinseooo",
-#       "mutualText": null,
-#       "requesterProfileImg": "/uploads/profiles/2026/05/profile.jpg"
+#       "mutualFollowerName": "seoul.soul_mate",
+#       "mutualFollowerCount": 3,
+#       "requesterProfileImg": "/uploads/profiles/2026/05/profile.jpg",
+#       "createdAt": "2026-05-10T10:15:00"
 #     }
 #   ]
 # }

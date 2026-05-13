@@ -41,7 +41,7 @@ Authorization: Bearer {{accessToken}}
 #   "followingCount": 321,
 #   "postCount": 10,
 #   "accountVisibility": "PRIVATE",
-#   "viewerRelation": "OWNER",
+#   "viewerRelation": "SELF",
 #   "canViewContent": true,
 #   "isOwner": true
 # }

@@ -24,7 +24,7 @@
 # 테스트 필요 조건
 # - 공개 계정 조회 시 canViewContent true
 # - 비공개/미팔로우 계정 조회 시 canViewContent false
-# - 본인 조회 시 viewerRelation OWNER
+# - 본인 조회 시 viewerRelation SELF
 
 ### userId 기준 프로필 조회
 GET {{baseUrl}}/api/profiles/users/{{userId}}

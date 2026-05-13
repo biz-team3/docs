@@ -16,6 +16,7 @@
 # - 현재 로그인 사용자가 targetUserId인 PENDING 요청만 반환한다.
 # - 이미 수락/거절된 요청은 반환하지 않는다.
 # - 팔로워 목록에는 아직 포함하지 않는다.
+# - mutualText 는 공통 팔로워 계산 정책 확정 전까지 null 일 수 있다.
 #
 # 테스트 필요 조건
 # - PENDING 요청 목록 표시
@@ -34,9 +35,9 @@ Authorization: Bearer {{accessToken}}
 #       "requestId": 10,
 #       "requesterId": 2,
 #       "targetUserId": 1,
-#       "username": "mijinseooo",
-#       "mutualText": "seoul.soul_mate님 외 2명이 팔로우합니다",
-#       "imageUrl": "https://example.com/profile.jpg"
+#       "requesterName": "mijinseooo",
+#       "mutualText": null,
+#       "requesterProfileImg": "/uploads/profiles/2026/05/profile.jpg"
 #     }
 #   ]
 # }

@@ -24,6 +24,7 @@
 # - 빈 요청 상태 표시
 # - 수락 후 목록에서 제거
 # - 거절 후 목록에서 제거
+# - 수락 후 GET /api/notifications 목록에 FOLLOW 알림 추가
 
 ### 받은 팔로우 요청 목록 조회
 GET {{baseUrl}}/api/follow-requests

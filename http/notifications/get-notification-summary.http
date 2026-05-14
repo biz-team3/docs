@@ -14,6 +14,8 @@
 
 # 제한 조건
 # - unreadNotificationCount는 read=false 알림 수다.
+# - 삭제된 게시물을 대상으로 하는 unread 알림은 배지 수에서 제외한다.
+# - 기존에 중복 저장된 LIKE 알림은 최신 1건만 unread 배지 수에 반영한다.
 # - pendingFollowRequestCount는 현재 사용자가 받은 PENDING 요청 수다.
 # - totalBadgeCount는 두 값을 합산한다.
 # - 알림 읽음 처리는 unreadNotificationCount만 변경하고, 팔로우 요청 수는 수락/거절 API 결과에 따라 변경된다.
